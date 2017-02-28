@@ -1,0 +1,9 @@
+form li span {
+    display: inline-block;
+    width: 6em;
+    text-align: right;
+}
+
+form li:last-child {
+    margin-left: 6em;
+}
