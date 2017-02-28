@@ -1,5 +1,7 @@
 package com.youyou.servlet;
 
+import com.youyou.utils.GraphicsUtil;
+
 import javax.imageio.ImageIO;
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
@@ -28,7 +30,8 @@ public class VersionCodeServlet extends HttpServlet {
     private final StringBuilder tempBuilder = new StringBuilder();
     private final int Ovalradius = 2;
     private final int FontCount = 4;
-    private final int FontSize=18;
+    private final int FontSize = 18;
+
     @Override
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
@@ -54,26 +57,8 @@ public class VersionCodeServlet extends HttpServlet {
         for (int i = 0; i < FontCount; i++) {
             tempBuilder.append(code.charAt(random.nextInt(code.length())));
         }
-        drawCenteredString(graphics,tempBuilder.toString(),new Rectangle(width,height),new Font("Candara", Font.BOLD, FontSize));
+        GraphicsUtil.drawCenteredString(graphics, tempBuilder.toString(), new Rectangle(width, height), new Font("Candara", Font.BOLD, FontSize));
         ImageIO.write(bufferedImage, "jpg", outputStream);
     }
-    /**
-     * Draw a String centered in the middle of a Rectangle.
-     *
-     * @param g The Graphics instance.
-     * @param text The String to draw.
-     * @param rect The Rectangle to center the text in.
-     */
-    public void drawCenteredString(Graphics g, String text, Rectangle rect, Font font) {
-        // Get the FontMetrics
-        FontMetrics metrics = g.getFontMetrics(font);
-        // Determine the X coordinate for the text
-        int x = (rect.width - metrics.stringWidth(text)) / 2;
-        // Determine the Y coordinate for the text (note we add the ascent, as in java 2d 0 is top of the screen)
-        int y = ((rect.height - metrics.getHeight()) / 2) + metrics.getAscent();
-        // Set the font
-        g.setFont(font);
-        // Draw the String
-        g.drawString(text, x, y);
-    }
+
 }
